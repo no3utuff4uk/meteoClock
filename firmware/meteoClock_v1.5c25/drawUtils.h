@@ -528,7 +528,7 @@ void redrawScreen(byte subMode, byte subPodMode) {
           break;
           case 6:
 #if (WEEK_LANG == 1)
-          lcd.print("BPEM./\3ATA");  // Изменение времени.
+          lcd.print("BPEM\5/\3ATA");  // Изменение времени.
 #else
           lcd.print("date/time");
 #endif

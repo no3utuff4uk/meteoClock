@@ -139,7 +139,7 @@ boolean singlePressEvent() {
   if (mode >= 240) {
       podMode++;
       switch (mode) {
-        case 251:
+        case 251: {
           switch(dateTimeCursorPos) {
             case 0: {
               if(currentHrs < 23) {
@@ -147,7 +147,6 @@ boolean singlePressEvent() {
               } else {
                 currentHrs = 0;
               }
-              changeFlag = true;
               break;
             }
             case 1: {
@@ -156,7 +155,6 @@ boolean singlePressEvent() {
               } else {
                 currentMins = 0;
               }
-              changeFlag = true;
               break;
             }
             case 2: {
@@ -165,7 +163,6 @@ boolean singlePressEvent() {
               } else {
                 currentDay = 1;
               }
-              changeFlag = true;
               break;
             }
             case 3: {
@@ -174,16 +171,14 @@ boolean singlePressEvent() {
               } else {
                 currentMonth = 1;
               }
-              changeFlag = true;
               break;
             }
             case 4: {
-              if(currentYear < 2050) {
+              if(currentYear < 2050 && currentYear >= 2020) {
                 currentYear++;
               } else {
                 currentYear = 2020;
               }
-              changeFlag = true;
               break;
             }
             case 5: {
@@ -194,7 +189,6 @@ boolean singlePressEvent() {
               hrs = now.hour();
               mode = 0;
               podMode = 0;
-              changeFlag = true;
               break;
             } 
             case 6: {
@@ -203,35 +197,29 @@ boolean singlePressEvent() {
               break;
             } 
           }
-          break;
+          break; 
+        }
         case 252:             // Перебираем все варианты режимов LED индикатора (с)НР
-          //         podMode++;
           if (podMode > 4) podMode = 0;
           LEDType = podMode;
-          changeFlag = true;
           break;
 
         case 253:             // Перебираем все варианты яркости LCD экрана (с)НР
-          //         podMode++;
           if (podMode > 11) podMode = 0;
           LCD_BRIGHT = podMode;
           checkBrightness();
-          changeFlag = true;
           break;
 
         case 254:             // Перебираем все варианты яркости LED индикатора (с)НР
-          //         podMode++;
           if (podMode > 11) podMode = 0;
           LED_BRIGHT = podMode;
-          changeFlag = true;
           break;
 
         case 255:             // Перебираем все варианты основных настроек (с)НР
-          //         podMode++;
           if (podMode > 16) podMode = 1;
-          changeFlag = true;
           break;
       }
+      changeFlag = true;
     } else {
       do {
         mode++;
