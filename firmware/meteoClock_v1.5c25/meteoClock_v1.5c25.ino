@@ -181,8 +181,9 @@ void setup() {
     }
 
   }
-
-  if (DISPLAY_TYPE == 1) drawData();
+  #if (DISPLAY_TYPE == 1)
+    drawData();
+  #endif
   loadClock();
   // readSensors();
   drawSensors();

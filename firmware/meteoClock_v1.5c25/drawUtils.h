@@ -470,6 +470,167 @@ void redrawPlot() {
 #endif
 }
 
+void drawChangeDateTimeMenu() {
+  lcd.createChar(3, curs);  //Курсор
+#if (WEEK_LANG == 1)
+    lcd.createChar(1, BM);  //Ь
+    lcd.createChar(2, YY);  //Ы
+    lcd.createChar(4, II);  //И
+    lcd.createChar(5, DD);  //Д
+    lcd.createChar(6, GG);  //Г
+    lcd.createChar(7, CH);  //Ч
+#endif
+
+#if (DISPLAY_TYPE == 1) //2004 (большой) - все помещается на одном экране
+    lcd.setCursor(0, 0);
+#if (WEEK_LANG == 1)
+    lcd.print("\7:");
+#else
+    lcd.print("H:")
+#endif
+    lcd.print(String(currentHrs));
+    if(dateTimeCursorPos == 0) {
+      lcd.print("\3");
+    }
+    
+    lcd.setCursor(0, 1);
+    lcd.print("M:");
+    lcd.print(String(currentMins));
+    if(dateTimeCursorPos == 1) {
+      lcd.print("\3");
+    }
+
+    lcd.setCursor(0, 2);
+#if (WEEK_LANG == 1)
+    lcd.print("\5EH\1:");
+#else
+    lcd.print("DAY:")
+#endif
+    lcd.print(String(currentDay));
+    if(dateTimeCursorPos == 2) {
+      lcd.print("\3");
+    }
+
+    lcd.setCursor(0, 3);
+#if (WEEK_LANG == 1)
+    lcd.print("MEC.:");
+#else
+    lcd.print("MO:")
+#endif
+    lcd.print(String(currentMonth));
+    if(dateTimeCursorPos == 3) {
+      lcd.print("\3");
+    }
+
+    lcd.setCursor(10, 0);
+#if (WEEK_LANG == 1)
+    lcd.print("\6O\5:");
+#else
+    lcd.print("YEAR:")
+#endif
+    lcd.print(String(currentYear));
+    if(dateTimeCursorPos == 4) {
+      lcd.print("\3");
+    }
+
+    //--------------------------
+    
+    lcd.setCursor(10, 2);
+#if (WEEK_LANG == 1)
+    lcd.print("COXPAH\4T\1");
+#else
+    lcd.print("SAVE")
+#endif
+    if(dateTimeCursorPos == 5) {
+      lcd.print("\3");
+    }
+
+    lcd.setCursor(10, 3);
+#if (WEEK_LANG == 1)
+    lcd.print("B\2XO\5");
+#else
+    lcd.print("EXIT")
+#endif
+    if(dateTimeCursorPos == 6) {
+      lcd.print("\3");
+    }
+
+#else //1602 (маленький) - рисуем частями. Отображение пунктов зависит от курсора
+    if(dateTimeCursorPos <= 3) {
+      lcd.setCursor(0, 0);
+#if (WEEK_LANG == 1)
+      lcd.print("\7:");
+#else
+      lcd.print("H:")
+#endif
+      lcd.print(String(currentHrs));
+      if(dateTimeCursorPos == 0) {
+        lcd.print("\3");
+      }
+      
+      lcd.setCursor(0, 1);
+      lcd.print("M:");
+      lcd.print(String(currentMins));
+      if(dateTimeCursorPos == 1) {
+        lcd.print("\3");
+      }
+
+      lcd.setCursor(10, 0);
+#if (WEEK_LANG == 1)
+      lcd.print("\5EH\1:");
+#else
+      lcd.print("DAY:")
+#endif
+      lcd.print(String(currentDay));
+      if(dateTimeCursorPos == 2) {
+        lcd.print("\3");
+      }
+
+      lcd.setCursor(10, 1);
+#if (WEEK_LANG == 1)
+      lcd.print("MEC.:");
+#else
+      lcd.print("MO:")
+#endif
+      lcd.print(String(currentMonth));
+      if(dateTimeCursorPos == 3) {
+        lcd.print("\3");
+      }
+    } else if(dateTimeCursorPos > 3 && dateTimeCursorPos <= 7) {
+      lcd.setCursor(0, 0);
+#if (WEEK_LANG == 1)
+      lcd.print("\6O\5:");
+#else
+      lcd.print("YEAR:")
+#endif
+      lcd.print(String(currentYear));
+      if(dateTimeCursorPos == 4) {
+        lcd.print("\3");
+      }
+
+      lcd.setCursor(0, 1);
+#if (WEEK_LANG == 1)
+      lcd.print("COXPAH\4T\1");
+#else
+      lcd.print("SAVE")
+#endif
+      if(dateTimeCursorPos == 5) {
+        lcd.print("\3");
+      }
+
+      lcd.setCursor(10, 0);
+#if (WEEK_LANG == 1)
+      lcd.print("B\2XO\5");
+#else
+      lcd.print("EXIT")
+#endif
+      if(dateTimeCursorPos == 6) {
+        lcd.print("\3");
+      }
+    }
+#endif
+}
+
 void redrawScreen(byte subMode, byte subPodMode) {
     if (subMode >= 240) {
       lcd.clear();
@@ -599,88 +760,7 @@ void redrawScreen(byte subMode, byte subPodMode) {
       }
     }
     if (subMode == 251) {  
-      lcd.createChar(3, curs);  //Курсор
-#if (WEEK_LANG == 1)
-      lcd.createChar(1, BM);  //Ь
-      lcd.createChar(2, YY);  //Ы
-      lcd.createChar(4, II);  //И
-      lcd.createChar(5, DD);  //Д
-      lcd.createChar(6, GG);  //Г
-      lcd.createChar(7, CH);  //Ч
-#endif
-
-      lcd.setCursor(0, 0);
-#if (WEEK_LANG == 1)
-      lcd.print("\7:");
-#else
-      lcd.print("H:")
-#endif
-      lcd.print(String(currentHrs));
-      if(dateTimeCursorPos == 0) {
-        lcd.print("\3");
-      }
-      
-      lcd.setCursor(0, 1);
-      lcd.print("M:");
-      lcd.print(String(currentMins));
-      if(dateTimeCursorPos == 1) {
-        lcd.print("\3");
-      }
-
-      lcd.setCursor(0, 2);
-#if (WEEK_LANG == 1)
-      lcd.print("\5EH\1:");
-#else
-      lcd.print("DAY:")
-#endif
-      lcd.print(String(currentDay));
-      if(dateTimeCursorPos == 2) {
-        lcd.print("\3");
-      }
-
-      lcd.setCursor(0, 3);
-#if (WEEK_LANG == 1)
-      lcd.print("MEC.:");
-#else
-      lcd.print("MO:")
-#endif
-      lcd.print(String(currentMonth));
-      if(dateTimeCursorPos == 3) {
-        lcd.print("\3");
-      }
-
-      lcd.setCursor(10, 0);
-#if (WEEK_LANG == 1)
-      lcd.print("\6O\5:");
-#else
-      lcd.print("YEAR:")
-#endif
-      lcd.print(String(currentYear));
-      if(dateTimeCursorPos == 4) {
-        lcd.print("\3");
-      }
-
-      //--------------------------
-      
-      lcd.setCursor(10, 2);
-#if (WEEK_LANG == 1)
-      lcd.print("COXPAH\4T\1");
-#else
-      lcd.print("SAVE")
-#endif
-      if(dateTimeCursorPos == 5) {
-        lcd.print("\3");
-      }
-
-      lcd.setCursor(10, 3);
-#if (WEEK_LANG == 1)
-      lcd.print("B\2XO\5");
-#else
-      lcd.print("EXIT")
-#endif
-      if(dateTimeCursorPos == 6) {
-        lcd.print("\3");
-      }
+      drawChangeDateTimeMenu();
     }
     if (subMode == 252) {                        // --------------------- показать  "Реж.индикатора"
       LEDType = subPodMode;
